@@ -32,7 +32,7 @@ const RETIRED_LOCALES = new Map(
   ].map((x) => [x.toLowerCase(), x])
 );
 
-const DEFAULT_LOCALE = "en-US";
+const DEFAULT_LOCALE = "zh-CN";
 
 const LOCALE_ALIASES = new Map([
   // Case is not important on either the keys or the values.
