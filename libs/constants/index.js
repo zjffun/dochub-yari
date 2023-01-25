@@ -1,7 +1,5 @@
 const VALID_LOCALES = new Map(
-  ["en-US", "es", "fr", "ja", "ko", "pt-BR", "ru", "zh-CN", "zh-TW"].map(
-    (x) => [x.toLowerCase(), x]
-  )
+  ["en-US", "zh-CN"].map((x) => [x.toLowerCase(), x])
 );
 
 const RETIRED_LOCALES = new Map(

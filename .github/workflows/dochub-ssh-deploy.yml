@@ -1,0 +1,36 @@
+name: SSH deploy CI
+
+on:
+  push:
+    branches:
+      - "dochub-zh-cn-release"
+  # release:
+  #   types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - name: Install dependencies
+        run: yarn install
+      - name: Pull content
+        run:
+          - git clone --depth=1 -b dochub-zh-cn https://github.com/zjffun/content.git dochub-zh-cn/content
+          - git clone --depth=1 -b dochub-zh-cn https://github.com/zjffun/translated-content.git dochub-zh-cn/translated-content
+      - name: Run build task
+        run:
+          - yarn run build:client
+          - yarn run build
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SOURCE: "client/build/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: "ubuntu"
+          TARGET: "/var/www/html/dochub-docs/mdn"
