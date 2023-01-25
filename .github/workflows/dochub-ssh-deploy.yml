@@ -25,6 +25,7 @@ jobs:
       - name: Run build task
         run: |
           yarn run build:client
+          yarn run build:ssr
           yarn run build
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@v2.1.5
